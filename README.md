@@ -49,15 +49,24 @@ Os estados do autômato R3 são:
 Os eventos possíveis do autômato R3 são:
 -
 
-No momento em que qualquer um dos autômatos R1 e R2 entrarem em falha, R3 é ativado, e então segue para o buffer de entrada, e então trasporta a carga para a máquina designada
+No momento em que qualquer um dos autômatos R1 e R2 entrarem em falha, R3 é ativado, segue para o buffer de entrada, e então trasporta a carga para a máquina designada. Após isso, ele volta ao estado inativo, para esperar por uma nova solicitação, caso o robô continue em falha. Caso ao receber a solicitação, o robô em falha seja reiniciado com sucesso, o robô 3 volta ao estado inativo. Caso o robô 3 já esteja no processo de transporte e o robô em falha seja reiniciado, ele ficará inativo até que o robô 3 termine o processo.
+Note que há eventos que podem ser executados por cada robô simultaneamente, o que pode causar conflitos: O robô 1 e o robô 2 podem receber uma solicitação ao mesmo tempo, e então colidiriam no buffer de enrada. Dessa forma, faz-se necessário que enquanto um robô se dirija ao buffer de entrada, o outro se mantenha pronto a mover-se. Quando o primeiro robô retira a carga e for transportá-la para a máquina, então o outro robô pode se dirigir ao buffer de entrada. Para controlar isso, um autômato supervisório deve ser projetado. Esse autômato é ilustrado na figura 3.
 
+![Autômato Supervisor](imagens/Supervisor.png)
 
+## Resultados e Conclusões
+Após a adição do supervisor, a simular o sistema, caso um dos robôs se dirija ao buffer de entrada e o outro tenha recebido uma solicitação, este não poderá seguir para o buffer de entrada antes que o evento de trasportar a carga para a máquina ocorra no autômato do primeiro robô. Esse processo é ilustrado nas figuras 4 e 5, onde os eventos verdes são os eventos habilitados no estado atual. Note que quando ocorre o evento "EVENTO DE IR PRO BUFFER" ocorre em um autômato, e o outro está no estado de "ESTADO DE ESPERA PARA IR PARA O BUFFER", o evento "EVENTO DE IR PRO BUFFER" está desativado neste autômato, o que resolve o problema de colisão e competição por carga no buffer. Isso ocorre também para o robô 3.
 
+![fig5](imagens/Supervisor.png) ![fig6](imagens/Supervisor.png)
 
+A implementação do robô reserva também funcionou como esperado: O evento "EVENTO DE FALHA" em um dos robôs ativa o robô 3, que recebe a solicitação. caso o evento "REINICIALIZAÇÃO" ocorra, o robô 3 volta ao estado inativo, e o primeiro robô está pronto para receber a solicitação. Caso contrário, o robô 3 se dirige ao buffer, caso não haja outro robô se dirigindo até lá, e então pode transportar a carga. Caso o robô que tenha falhado seja reinicalizado durante esse processo, ele não é reativado, e não pode receber solicitações, até que robô 3 termine o percurso. Ese processo é ilustrado nas figuras 6 e 7
 
+![fig7](imagens/Supervisor.png) ![fig8](imagens/Supervisor.png)
 
+Foi-se capaz de mostrar a partir dessas simulações que o projeto de controle supervisório em um sistema a eventos discretos é eficiente em aplicar restrições e permissões a eventos controláveis em autômatos finitos, e o software foi um facilitador do processo de criar e simular os outômatos e o sistema composto pelos mesmos.
 
 
 
 ## Referências
 1. <a id="referencia-1"></a> > SUPREMICA. Supremica: Supervisor synthesis tool. Disponível em: <https://github.com/robimalik/Supremica>. Acesso em: 11 mar. 2025.
+2. Cassandras, C. G., & Lafortune, S. (2007). Introduction to Discrete Event Systems (2ª ed.). Springer. ISBN: 978-0387333328.
