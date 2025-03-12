@@ -8,9 +8,9 @@
 <EventDecl Kind="CONTROLLABLE" Name="move_to_BE_R1"/>
 <EventDecl Kind="CONTROLLABLE" Name="move_to_machine_R2"/>
 <EventDecl Kind="CONTROLLABLE" Name="unload_R1"/>
-<EventDecl Kind="CONTROLLABLE" Name="failure_R1"/>
+<EventDecl Kind="UNCONTROLLABLE" Name="failure_R1"/>
 <EventDecl Kind="CONTROLLABLE" Name="return_R1"/>
-<EventDecl Kind="CONTROLLABLE" Name="failure_R2"/>
+<EventDecl Kind="UNCONTROLLABLE" Name="failure_R2"/>
 <EventDecl Kind="CONTROLLABLE" Name="move_to_BE_R2"/>
 <EventDecl Kind="CONTROLLABLE" Name="return_R2"/>
 <EventDecl Kind="CONTROLLABLE" Name="unload_R2"/>
@@ -145,6 +145,25 @@
 <SimpleIdentifier Name="failure_R1"/>
 </LabelBlock>
 </Edge>
+<Edge Source="MoveToMachine" Target="Failure">
+<LabelBlock>
+<SimpleIdentifier Name="failure_R1"/>
+<LabelGeometry Anchor="NW">
+<Point X="-39" Y="0"/>
+</LabelGeometry>
+</LabelBlock>
+<SplineGeometry>
+<Point X="33" Y="188"/>
+</SplineGeometry>
+</Edge>
+<Edge Source="Load" Target="Failure">
+<LabelBlock>
+<SimpleIdentifier Name="failure_R1"/>
+<LabelGeometry Anchor="NW">
+<Point X="-29" Y="-21"/>
+</LabelGeometry>
+</LabelBlock>
+</Edge>
 </EdgeList>
 </Graph>
 </SimpleComponent>
@@ -269,9 +288,31 @@
 <LabelBlock>
 <SimpleIdentifier Name="failure_R2"/>
 <LabelGeometry Anchor="NW">
-<Point X="-40" Y="-26"/>
+<Point X="-33" Y="3"/>
 </LabelGeometry>
 </LabelBlock>
+<SplineGeometry>
+<Point X="546" Y="285"/>
+</SplineGeometry>
+</Edge>
+<Edge Source="Load" Target="Failure">
+<LabelBlock>
+<SimpleIdentifier Name="failure_R2"/>
+<LabelGeometry Anchor="NW">
+<Point X="-33" Y="-11"/>
+</LabelGeometry>
+</LabelBlock>
+</Edge>
+<Edge Source="MoveToMachine" Target="Failure">
+<LabelBlock>
+<SimpleIdentifier Name="failure_R2"/>
+<LabelGeometry Anchor="NW">
+<Point X="-41" Y="15"/>
+</LabelGeometry>
+</LabelBlock>
+<SplineGeometry>
+<Point X="582" Y="436"/>
+</SplineGeometry>
 </Edge>
 </EdgeList>
 </Graph>
@@ -284,7 +325,7 @@
 <Point X="80" Y="176"/>
 </PointGeometry>
 <LabelGeometry Anchor="NW">
-<Point X="0" Y="10"/>
+<Point X="2" Y="-22"/>
 </LabelGeometry>
 </SimpleNode>
 <SimpleNode Name="Load">
@@ -403,20 +444,32 @@
 </LabelGeometry>
 </LabelBlock>
 </Edge>
-<Edge Source="ReplaceR1" Target="Idle">
+<Edge Source="Idle" Target="Idle">
 <LabelBlock>
 <SimpleIdentifier Name="robot_reset_R1"/>
+<LabelGeometry Anchor="NW">
+<Point X="-63" Y="-26"/>
+</LabelGeometry>
 </LabelBlock>
+<StartPointGeometry>
+<Point X="80" Y="176"/>
+</StartPointGeometry>
 <SplineGeometry>
-<Point X="-19" Y="96"/>
+<Point X="78" Y="292"/>
 </SplineGeometry>
 </Edge>
-<Edge Source="ReplaceR2" Target="Idle">
+<Edge Source="Idle" Target="Idle">
 <LabelBlock>
 <SimpleIdentifier Name="robot_reset_R2"/>
+<LabelGeometry Anchor="NW">
+<Point X="-29" Y="-39"/>
+</LabelGeometry>
 </LabelBlock>
+<StartPointGeometry>
+<Point X="80" Y="176"/>
+</StartPointGeometry>
 <SplineGeometry>
-<Point X="181" Y="70"/>
+<Point X="-33" Y="201"/>
 </SplineGeometry>
 </Edge>
 </EdgeList>
