@@ -26,20 +26,30 @@ O sistema deve funcionar conforme as seguintes regras:
 - Como ambos os robôs passam pelo BE, é necessário um controle para evitar colisões na área.
 - Os robôs devem aguardar se o outro estiver no buffer.
 
-A priori, são projetados os autômatos referentes aos robôs, definindo-se seus estados e eventos possíveis. A figura 1 ilustra os estados, eventos possíveis e as relações entre eles referentes aos robôs 1 e 2, que possuem o mesmo modo de operação.
+A priori, são projetados os autômatos referentes aos robôs, definindo-se seus estados e eventos possíveis, controáveis ou não. A figura 1 ilustra os estados, eventos possíveis e as relações entre eles referentes aos robôs 1 e 2, que possuem o mesmo modo de operação.
 
 ![Autômato R1](imagens/R1.png)  ![Autômato R2](imagens/R2.png)
 
 Os estados definidos para os autômatos R1 e R2 são:
-- Idle: O robô está inativos;
+- Idle;
+- ReadyToMovetoBE;
+- Load;
+- WaitChoiceMxorMy;
+- UnloadFree;
+- Failure
 
 Os eventos possíveis para cada autômato são:
--
--
+- request_Rx(*uncontrollable*);
+- move_to_BE_Rx;
+- move_to_machine_area_Rx;
+- UnloadRx_Mx;
+- UnloadRx_My;
+- Failure_Rx (*uncontrollable*);
+- robot_reset_Rx;
 
-Ambos os robôs estão por padrão inativos. Qualquer um pode ser acionado a qualquer momento, e caso haja uma falha, o autômato fica em um estado de falha, caso não, o robô segue até o buffer de entrada para retirar a carga. A partir daí, ele segue para a máquina designada e volta a ficar inativo após isso.
+Ambos os robôs estão por padrão inativos. Qualquer um pode ser acionado a qualquer momento, o que o leva para o estado de request(*ReadytoMovetoBE*), e caso haja uma falha, o autômato fica em um estado de falha, caso não, o robô segue até o buffer de entrada para retirar a carga. A partir daí, o autômato pode falhar, ou entrar no estado de espera(*WaitChoiceMxorMy*). Neste estado, ele pode entrar no esstado se falha ou se dirigir para o estado de descarga, de onde então volta ao estado inativo.
 
-Note que se um dos robôs falhar, não há como garantir que ee será reinicializado e que a carga será transportada. Para solucionar esse problema, o autômao que representa o comportamento do robô 3 é ilustrado na figura 2.
+Note que se um dos robôs falhar, o sistema para, uma vez que a carga não pode ser transportada por R2. Para solucionar esse problema, o autômao que representa o comportamento do robô 3 é ilustrado na figura 2.
 
 ![Autômato R3](imagens/R3.png)
 
