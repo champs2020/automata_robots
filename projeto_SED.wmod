@@ -6,21 +6,26 @@
 <EventDecl Kind="UNCONTROLLABLE" Name="robot_reset_R1"/>
 <EventDecl Kind="UNCONTROLLABLE" Name="request_R2"/>
 <EventDecl Kind="CONTROLLABLE" Name="move_to_BE_R1"/>
-<EventDecl Kind="CONTROLLABLE" Name="move_to_machine_R2"/>
-<EventDecl Kind="CONTROLLABLE" Name="unload_R1"/>
+<EventDecl Kind="CONTROLLABLE" Name="move_machine_area_R2"/>
+<EventDecl Kind="CONTROLLABLE" Name="unloadR1_M1"/>
 <EventDecl Kind="UNCONTROLLABLE" Name="failure_R1"/>
 <EventDecl Kind="CONTROLLABLE" Name="return_R1"/>
 <EventDecl Kind="UNCONTROLLABLE" Name="failure_R2"/>
 <EventDecl Kind="CONTROLLABLE" Name="move_to_BE_R2"/>
 <EventDecl Kind="CONTROLLABLE" Name="return_R2"/>
-<EventDecl Kind="CONTROLLABLE" Name="unload_R2"/>
-<EventDecl Kind="CONTROLLABLE" Name="move_to_machine_R1"/>
+<EventDecl Kind="CONTROLLABLE" Name="unloadR2_M3"/>
+<EventDecl Kind="CONTROLLABLE" Name="move_machine_area_R1"/>
 <EventDecl Kind="CONTROLLABLE" Name="move_to_BE_R3"/>
-<EventDecl Kind="CONTROLLABLE" Name="move_to_machine_R3"/>
 <EventDecl Kind="CONTROLLABLE" Name="return_R3"/>
-<EventDecl Kind="CONTROLLABLE" Name="unload_R3"/>
+<EventDecl Kind="CONTROLLABLE" Name="unloadR2_M4"/>
 <EventDecl Kind="UNCONTROLLABLE" Name="request_R1"/>
 <EventDecl Kind="UNCONTROLLABLE" Name="robot_reset_R2"/>
+<EventDecl Kind="CONTROLLABLE" Name="unloadR1_M2"/>
+<EventDecl Kind="CONTROLLABLE" Name="move_machine_area_R3"/>
+<EventDecl Kind="CONTROLLABLE" Name="unloadR3_M1"/>
+<EventDecl Kind="CONTROLLABLE" Name="unloadR3_M2"/>
+<EventDecl Kind="CONTROLLABLE" Name="unloadR3_M3"/>
+<EventDecl Kind="CONTROLLABLE" Name="unloadR3_M4"/>
 </EventDeclList>
 <ComponentList>
 <SimpleComponent Kind="PLANT" Name="R1">
@@ -50,17 +55,17 @@
 <Point X="0" Y="10"/>
 </LabelGeometry>
 </SimpleNode>
-<SimpleNode Name="MoveToMachine">
+<SimpleNode Name="WaitChoiceM1OrM2">
 <PointGeometry>
-<Point X="-48" Y="288"/>
+<Point X="-32" Y="400"/>
 </PointGeometry>
 <LabelGeometry Anchor="NW">
 <Point X="0" Y="10"/>
 </LabelGeometry>
 </SimpleNode>
-<SimpleNode Name="Unload">
+<SimpleNode Name="UnloadFree">
 <PointGeometry>
-<Point X="-400" Y="288"/>
+<Point X="-400" Y="400"/>
 </PointGeometry>
 <LabelGeometry Anchor="NW">
 <Point X="0" Y="10"/>
@@ -92,17 +97,15 @@
 </LabelGeometry>
 </LabelBlock>
 </Edge>
-<Edge Source="Load" Target="MoveToMachine">
+<Edge Source="Load" Target="WaitChoiceM1OrM2">
 <LabelBlock>
-<SimpleIdentifier Name="move_to_machine_R1"/>
+<SimpleIdentifier Name="move_machine_area_R1"/>
+<LabelGeometry Anchor="NW">
+<Point X="-79" Y="-4"/>
+</LabelGeometry>
 </LabelBlock>
 </Edge>
-<Edge Source="MoveToMachine" Target="Unload">
-<LabelBlock>
-<SimpleIdentifier Name="unload_R1"/>
-</LabelBlock>
-</Edge>
-<Edge Source="Unload" Target="Idle">
+<Edge Source="UnloadFree" Target="Idle">
 <LabelBlock>
 <SimpleIdentifier Name="return_R1"/>
 <LabelGeometry Anchor="NW">
@@ -121,7 +124,7 @@
 <Point X="-172" Y="94"/>
 </SplineGeometry>
 </Edge>
-<Edge Source="MoveToMachine" Target="Failure">
+<Edge Source="WaitChoiceM1OrM2" Target="Failure">
 <LabelBlock>
 <SimpleIdentifier Name="failure_R1"/>
 <LabelGeometry Anchor="NW">
@@ -145,7 +148,7 @@
 <SimpleIdentifier Name="failure_R1"/>
 </LabelBlock>
 </Edge>
-<Edge Source="MoveToMachine" Target="Failure">
+<Edge Source="WaitChoiceM1OrM2" Target="Failure">
 <LabelBlock>
 <SimpleIdentifier Name="failure_R1"/>
 <LabelGeometry Anchor="NW">
@@ -153,7 +156,7 @@
 </LabelGeometry>
 </LabelBlock>
 <SplineGeometry>
-<Point X="33" Y="188"/>
+<Point X="88" Y="235"/>
 </SplineGeometry>
 </Edge>
 <Edge Source="Load" Target="Failure">
@@ -163,6 +166,28 @@
 <Point X="-29" Y="-21"/>
 </LabelGeometry>
 </LabelBlock>
+</Edge>
+<Edge Source="WaitChoiceM1OrM2" Target="UnloadFree">
+<LabelBlock>
+<SimpleIdentifier Name="unloadR1_M2"/>
+<LabelGeometry Anchor="NW">
+<Point X="-26" Y="8"/>
+</LabelGeometry>
+</LabelBlock>
+<SplineGeometry>
+<Point X="-225" Y="477"/>
+</SplineGeometry>
+</Edge>
+<Edge Source="WaitChoiceM1OrM2" Target="UnloadFree">
+<LabelBlock>
+<SimpleIdentifier Name="unloadR1_M1"/>
+<LabelGeometry Anchor="NW">
+<Point X="-35" Y="7"/>
+</LabelGeometry>
+</LabelBlock>
+<SplineGeometry>
+<Point X="-213" Y="371"/>
+</SplineGeometry>
 </Edge>
 </EdgeList>
 </Graph>
@@ -194,20 +219,20 @@
 <Point X="0" Y="10"/>
 </LabelGeometry>
 </SimpleNode>
-<SimpleNode Name="MoveToMachine">
+<SimpleNode Name="WaitChoiceM3OrM4">
 <PointGeometry>
-<Point X="496" Y="544"/>
+<Point X="496" Y="640"/>
 </PointGeometry>
 <LabelGeometry Anchor="NW">
 <Point X="0" Y="10"/>
 </LabelGeometry>
 </SimpleNode>
-<SimpleNode Name="Unload">
+<SimpleNode Name="UnloadFree">
 <PointGeometry>
-<Point X="144" Y="544"/>
+<Point X="144" Y="640"/>
 </PointGeometry>
 <LabelGeometry Anchor="NW">
-<Point X="0" Y="10"/>
+<Point X="-48" Y="9"/>
 </LabelGeometry>
 </SimpleNode>
 <SimpleNode Name="Failure">
@@ -236,17 +261,26 @@
 </LabelGeometry>
 </LabelBlock>
 </Edge>
-<Edge Source="Load" Target="MoveToMachine">
+<Edge Source="Load" Target="WaitChoiceM3OrM4">
 <LabelBlock>
-<SimpleIdentifier Name="move_to_machine_R2"/>
+<SimpleIdentifier Name="move_machine_area_R2"/>
+<LabelGeometry Anchor="NW">
+<Point X="-86" Y="-9"/>
+</LabelGeometry>
 </LabelBlock>
 </Edge>
-<Edge Source="MoveToMachine" Target="Unload">
+<Edge Source="WaitChoiceM3OrM4" Target="UnloadFree">
 <LabelBlock>
-<SimpleIdentifier Name="unload_R2"/>
+<SimpleIdentifier Name="unloadR2_M4"/>
+<LabelGeometry Anchor="NW">
+<Point X="-26" Y="9"/>
+</LabelGeometry>
 </LabelBlock>
+<SplineGeometry>
+<Point X="311" Y="712"/>
+</SplineGeometry>
 </Edge>
-<Edge Source="Unload" Target="Idle">
+<Edge Source="UnloadFree" Target="Idle">
 <LabelBlock>
 <SimpleIdentifier Name="return_R2"/>
 <LabelGeometry Anchor="NW">
@@ -262,7 +296,7 @@
 </LabelGeometry>
 </LabelBlock>
 </Edge>
-<Edge Source="MoveToMachine" Target="Failure">
+<Edge Source="WaitChoiceM3OrM4" Target="Failure">
 <LabelBlock>
 <SimpleIdentifier Name="failure_R2"/>
 <LabelGeometry Anchor="NW">
@@ -303,7 +337,7 @@
 </LabelGeometry>
 </LabelBlock>
 </Edge>
-<Edge Source="MoveToMachine" Target="Failure">
+<Edge Source="WaitChoiceM3OrM4" Target="Failure">
 <LabelBlock>
 <SimpleIdentifier Name="failure_R2"/>
 <LabelGeometry Anchor="NW">
@@ -311,7 +345,18 @@
 </LabelGeometry>
 </LabelBlock>
 <SplineGeometry>
-<Point X="582" Y="436"/>
+<Point X="622" Y="482"/>
+</SplineGeometry>
+</Edge>
+<Edge Source="WaitChoiceM3OrM4" Target="UnloadFree">
+<LabelBlock>
+<SimpleIdentifier Name="unloadR2_M3"/>
+<LabelGeometry Anchor="NW">
+<Point X="-37" Y="6"/>
+</LabelGeometry>
+</LabelBlock>
+<SplineGeometry>
+<Point X="320" Y="616"/>
 </SplineGeometry>
 </Edge>
 </EdgeList>
@@ -322,7 +367,7 @@
 <NodeList>
 <SimpleNode Initial="true" Name="Idle">
 <PointGeometry>
-<Point X="80" Y="176"/>
+<Point X="0" Y="192"/>
 </PointGeometry>
 <LabelGeometry Anchor="NW">
 <Point X="2" Y="-22"/>
@@ -330,23 +375,23 @@
 </SimpleNode>
 <SimpleNode Name="Load">
 <PointGeometry>
-<Point X="576" Y="0"/>
+<Point X="496" Y="16"/>
 </PointGeometry>
 <LabelGeometry Anchor="NW">
 <Point X="4" Y="-19"/>
 </LabelGeometry>
 </SimpleNode>
-<SimpleNode Name="MoveToMachine">
+<SimpleNode Name="WaitChoiceM1_M2_M3_M4">
 <PointGeometry>
-<Point X="576" Y="176"/>
+<Point X="592" Y="160"/>
 </PointGeometry>
 <LabelGeometry Anchor="NW">
 <Point X="7" Y="3"/>
 </LabelGeometry>
 </SimpleNode>
-<SimpleNode Name="Unload">
+<SimpleNode Name="UnloadFree">
 <PointGeometry>
-<Point X="352" Y="176"/>
+<Point X="272" Y="192"/>
 </PointGeometry>
 <LabelGeometry Anchor="NW">
 <Point X="-14" Y="11"/>
@@ -354,7 +399,7 @@
 </SimpleNode>
 <SimpleNode Name="ReplaceR1">
 <PointGeometry>
-<Point X="80" Y="0"/>
+<Point X="0" Y="16"/>
 </PointGeometry>
 <LabelGeometry Anchor="NW">
 <Point X="0" Y="10"/>
@@ -362,7 +407,7 @@
 </SimpleNode>
 <SimpleNode Name="ReplaceR2">
 <PointGeometry>
-<Point X="288" Y="96"/>
+<Point X="208" Y="112"/>
 </PointGeometry>
 <LabelGeometry Anchor="NW">
 <Point X="0" Y="10"/>
@@ -370,26 +415,26 @@
 </SimpleNode>
 </NodeList>
 <EdgeList>
-<Edge Source="Load" Target="MoveToMachine">
+<Edge Source="Load" Target="WaitChoiceM1_M2_M3_M4">
 <LabelBlock>
-<SimpleIdentifier Name="move_to_machine_R3"/>
+<SimpleIdentifier Name="move_machine_area_R3"/>
 <LabelGeometry Anchor="NW">
-<Point X="-35" Y="-28"/>
+<Point X="-37" Y="-25"/>
 </LabelGeometry>
 </LabelBlock>
 <SplineGeometry>
-<Point X="578" Y="88"/>
+<Point X="546" Y="87"/>
 </SplineGeometry>
 </Edge>
-<Edge Source="MoveToMachine" Target="Unload">
+<Edge Source="WaitChoiceM1_M2_M3_M4" Target="UnloadFree">
 <LabelBlock>
-<SimpleIdentifier Name="unload_R3"/>
+<SimpleIdentifier Name="unloadR3_M4"/>
 <LabelGeometry Anchor="NW">
-<Point X="-23" Y="7"/>
+<Point X="-30" Y="4"/>
 </LabelGeometry>
 </LabelBlock>
 <SplineGeometry>
-<Point X="465" Y="174"/>
+<Point X="444" Y="400"/>
 </SplineGeometry>
 </Edge>
 <Edge Source="Idle" Target="ReplaceR1">
@@ -400,13 +445,13 @@
 </LabelGeometry>
 </LabelBlock>
 <SplineGeometry>
-<Point X="82" Y="91"/>
+<Point X="2" Y="107"/>
 </SplineGeometry>
 <EndPointGeometry>
-<Point X="80" Y="0"/>
+<Point X="0" Y="16"/>
 </EndPointGeometry>
 </Edge>
-<Edge Source="Unload" Target="Idle">
+<Edge Source="UnloadFree" Target="Idle">
 <LabelBlock>
 <SimpleIdentifier Name="return_R3"/>
 <LabelGeometry Anchor="NW">
@@ -422,10 +467,10 @@
 </LabelGeometry>
 </LabelBlock>
 <SplineGeometry>
-<Point X="178" Y="136"/>
+<Point X="98" Y="152"/>
 </SplineGeometry>
 <EndPointGeometry>
-<Point X="288" Y="96"/>
+<Point X="208" Y="112"/>
 </EndPointGeometry>
 </Edge>
 <Edge Source="ReplaceR1" Target="Load">
@@ -452,10 +497,10 @@
 </LabelGeometry>
 </LabelBlock>
 <StartPointGeometry>
-<Point X="80" Y="176"/>
+<Point X="0" Y="192"/>
 </StartPointGeometry>
 <SplineGeometry>
-<Point X="78" Y="292"/>
+<Point X="-2" Y="308"/>
 </SplineGeometry>
 </Edge>
 <Edge Source="Idle" Target="Idle">
@@ -466,10 +511,43 @@
 </LabelGeometry>
 </LabelBlock>
 <StartPointGeometry>
-<Point X="80" Y="176"/>
+<Point X="0" Y="192"/>
 </StartPointGeometry>
 <SplineGeometry>
-<Point X="-33" Y="201"/>
+<Point X="-113" Y="217"/>
+</SplineGeometry>
+</Edge>
+<Edge Source="WaitChoiceM1_M2_M3_M4" Target="UnloadFree">
+<LabelBlock>
+<SimpleIdentifier Name="unloadR3_M3"/>
+<LabelGeometry Anchor="NW">
+<Point X="-23" Y="3"/>
+</LabelGeometry>
+</LabelBlock>
+<SplineGeometry>
+<Point X="434" Y="319"/>
+</SplineGeometry>
+</Edge>
+<Edge Source="WaitChoiceM1_M2_M3_M4" Target="UnloadFree">
+<LabelBlock>
+<SimpleIdentifier Name="unloadR3_M1"/>
+<LabelGeometry Anchor="NW">
+<Point X="-16" Y="5"/>
+</LabelGeometry>
+</LabelBlock>
+<SplineGeometry>
+<Point X="434" Y="173"/>
+</SplineGeometry>
+</Edge>
+<Edge Source="WaitChoiceM1_M2_M3_M4" Target="UnloadFree">
+<LabelBlock>
+<SimpleIdentifier Name="unloadR3_M2"/>
+<LabelGeometry Anchor="NW">
+<Point X="-28" Y="6"/>
+</LabelGeometry>
+</LabelBlock>
+<SplineGeometry>
+<Point X="443" Y="241"/>
 </SplineGeometry>
 </Edge>
 </EdgeList>
@@ -528,7 +606,7 @@
 </Edge>
 <Edge Source="BE_Occupied_R1" Target="BE_Free">
 <LabelBlock>
-<SimpleIdentifier Name="move_to_machine_R1"/>
+<SimpleIdentifier Name="move_machine_area_R1"/>
 <LabelGeometry Anchor="NW">
 <Point X="-55" Y="-23"/>
 </LabelGeometry>
@@ -539,13 +617,94 @@
 </Edge>
 <Edge Source="BE_Occupied_R2" Target="BE_Free">
 <LabelBlock>
-<SimpleIdentifier Name="move_to_machine_R2"/>
+<SimpleIdentifier Name="move_machine_area_R2"/>
 <LabelGeometry Anchor="NW">
 <Point X="-49" Y="-41"/>
 </LabelGeometry>
 </LabelBlock>
 <SplineGeometry>
 <Point X="59" Y="277"/>
+</SplineGeometry>
+</Edge>
+</EdgeList>
+</Graph>
+</SimpleComponent>
+<SimpleComponent Kind="SUPERVISOR" Name="SupervisorMachines">
+<Graph>
+<NodeList>
+<SimpleNode Initial="true" Name="WaitChoiceMachine">
+<PointGeometry>
+<Point X="160" Y="320"/>
+</PointGeometry>
+<InitialArrowGeometry>
+<Point X="-27" Y="5"/>
+</InitialArrowGeometry>
+<LabelGeometry Anchor="NW">
+<Point X="17" Y="-8"/>
+</LabelGeometry>
+</SimpleNode>
+<SimpleNode Name="M1_M2">
+<PointGeometry>
+<Point X="160" Y="160"/>
+</PointGeometry>
+<LabelGeometry Anchor="NW">
+<Point X="12" Y="-13"/>
+</LabelGeometry>
+</SimpleNode>
+<SimpleNode Name="M3_M4">
+<PointGeometry>
+<Point X="160" Y="464"/>
+</PointGeometry>
+<LabelGeometry Anchor="NW">
+<Point X="0" Y="10"/>
+</LabelGeometry>
+</SimpleNode>
+</NodeList>
+<EdgeList>
+<Edge Source="WaitChoiceMachine" Target="M1_M2">
+<LabelBlock>
+<SimpleIdentifier Name="failure_R1"/>
+<LabelGeometry Anchor="NW">
+<Point X="-34" Y="-9"/>
+</LabelGeometry>
+</LabelBlock>
+<SplineGeometry>
+<Point X="213" Y="232"/>
+</SplineGeometry>
+</Edge>
+<Edge Source="WaitChoiceMachine" Target="M3_M4">
+<LabelBlock>
+<SimpleIdentifier Name="failure_R2"/>
+<LabelGeometry Anchor="NW">
+<Point X="-36" Y="-3"/>
+</LabelGeometry>
+</LabelBlock>
+<SplineGeometry>
+<Point X="115" Y="393"/>
+</SplineGeometry>
+</Edge>
+<Edge Source="M1_M2" Target="WaitChoiceMachine">
+<LabelBlock>
+<SimpleIdentifier Name="unloadR3_M2"/>
+<SimpleIdentifier Name="unloadR3_M1"/>
+<LabelGeometry Anchor="NW">
+<Point X="-56" Y="-21"/>
+</LabelGeometry>
+</LabelBlock>
+<SplineGeometry>
+<Point X="79" Y="240"/>
+</SplineGeometry>
+</Edge>
+<Edge Source="M3_M4" Target="WaitChoiceMachine">
+<LabelBlock>
+<SimpleIdentifier Name="unloadR3_M3"/>
+<SimpleIdentifier Name="unloadR3_M4"/>
+<LabelGeometry Anchor="NW">
+<Point X="-59" Y="-17"/>
+</LabelGeometry>
+</LabelBlock>
+<SplineGeometry>
+<Point X="235" Y="384"/>
 </SplineGeometry>
 </Edge>
 </EdgeList>
