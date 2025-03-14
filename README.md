@@ -68,7 +68,7 @@ Os eventos possíveis do autômato R3 são:
 No momento em que qualquer um dos autômatos R1 e R2 entrarem em falha, R3 é ativado, segue para o buffer de entrada, e então trasporta a carga para a máquina designada. Após isso, ele volta ao estado inativo, para esperar por uma nova solicitação, caso o robô continue em falha. Após o robô 3 assumir o papel de um dos outros robôs, este fica impossibilitado de reinicializar, até que o robô três termine o percurso de transporte e volte ao estado *IDLE* 
 Note que há eventos que podem ser executados por cada robô simultaneamente, o que pode causar conflitos: O robô 1 e o robô 2 podem se digirir ao buffer ao mesmo tempo, e então colidiriam no buffer de enrada. Dessa forma, faz-se necessário que enquanto um robô se dirija ao buffer de entrada, o outro se mantenha pronto a mover-se. Quando o primeiro robô retira a carga e for transportá-la para a máquina, então o outro robô pode se dirigir ao buffer de entrada. Além disso, já que o robô 3 consegue receber a carga de qualquer outro robô, é necessário controlar para qual máquina o robô 3 deve levar a carga que recebeu do buffer, pois ele receberá a carga do robô que está em estado de falha. Para controlar isso, dois autômato supervisórios devem ser projetados. Esses autômatos são ilustrados nas figura 3 e 4.
 
-![SupervisorMachine](Imagens/SupervisorMachine.png)
+![SupervisorMachine](Imagens/SupervisorMachines.png)
 
 ![SupervisorBE](Imagens/SupervisorBE.png)
 
