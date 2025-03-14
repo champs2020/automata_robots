@@ -1,5 +1,11 @@
 # Controle de Sistema de Robôs Autônomos em Armazém
-
+Autores:
+Jezrael Pereira Filgueiras;
+José Hélio de Araújo Junior;
+Ingrid;
+Guilherme.
+- Link para vídeo explicativo no youtube:
+<https://youtu.be/YsKbvnhOKjo>
 ## Introdução
 
 Recentemente, com o rápido desenvolvimento da tecnologia e o advento da Indústria 4.0, a necessidade por automatização dos processos industriais por melhor gerenciamento de recursos e tempo, tornou-se evidente no século XXI. No desenvolvimento de sistemas de controle, uma das abordagens mais comuns é a de tratar o sistema como um autômato finito, sujeito a eventos discretos, que alteram o estado do sistema. Nesse tipo de abordagem, cada parte de um sistema, seus estados e eventos possíveis são projetados e desenvolvidos individualmente,  então podem ser combinadas para formar um sistema maior e mais complexo. Para coordenr o comportamento desse tipo de sistema, faz-se necessária a utilização de controle supervisório, projetado para atuar como uma camada de controle sobre o sistema, restringindo e autorizando transições entre estados para evitar comportamentos indesejados
