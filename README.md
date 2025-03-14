@@ -28,7 +28,7 @@ O sistema deve funcionar conforme as seguintes regras:
 
 A priori, são projetados os autômatos referentes aos robôs, definindo-se seus estados e eventos possíveis, controáveis ou não. A figura 1 ilustra os estados, eventos possíveis e as relações entre eles referentes aos robôs 1 e 2, que possuem o mesmo modo de operação.
 
-![Autômato R1](imagens/R1.png)  ![Autômato R2](imagens/R2.png)
+![Autômato R1](Imagens/R1.png)  ![Autômato R2](Imagens/R2.png)
 
 Os estados definidos para os autômatos R1 e R2 são:
 - Idle;
@@ -47,31 +47,39 @@ Os eventos possíveis para cada autômato são:
 - Failure_Rx (*uncontrollable*);
 - robot_reset_Rx;
 
-Ambos os robôs estão por padrão inativos. Qualquer um pode ser acionado a qualquer momento, o que o leva para o estado de request(*ReadytoMovetoBE*), e caso haja uma falha, o autômato fica em um estado de falha, caso não, o robô segue até o buffer de entrada para retirar a carga. A partir daí, o autômato pode falhar, ou entrar no estado de espera(*WaitChoiceMxorMy*). Neste estado, ele pode entrar no esstado se falha ou se dirigir para o estado de descarga, de onde então volta ao estado inativo.
+Ambos os robôs estão por padrão inativos. Qualquer um pode ser acionado a qualquer momento, o que o leva para o estado de request(*ReadytoMovetoBE*), e caso haja uma falha, o autômato fica em um estado de falha, caso não, o robô segue até o buffer de entrada para retirar a carga. A partir daí, o autômato pode falhar, ou entrar no estado de espera(*WaitChoiceMxorMy*). Neste estado, ele pode entrar no esstado se falha ou se dirigir para o estado de descarga, de onde então volta ao estado inativo. Vale ressaltar que a ordem se solicitação de transporte de carga(*request_Rx*) não implica na ordem de recebimento de carga, ou seja, desde que o buffer esteja livre, qualquer robô pode acessá-lo, e sua carga será entregue, ou seja, nenhum robô consegue receber a carga designada a outro robô.
 
 Note que se um dos robôs falhar, o sistema para, uma vez que a carga não pode ser transportada por R2. Para solucionar esse problema, o autômao que representa o comportamento do robô 3 é ilustrado na figura 2.
 
-![Autômato R3](imagens/R3.png)
+![Autômato R3](Imagens/R3.png)
 
 Os estados do autômato R3 são:
--
+- Idle;
+- Replace Rx;
+- Load;
+- UnloadFree;
 
 Os eventos possíveis do autômato R3 são:
--
+- failure_Rx;
+- robot_reset_Rx;
+- move_to_BE_R3;
+- unload_R3_Mx;
 
-No momento em que qualquer um dos autômatos R1 e R2 entrarem em falha, R3 é ativado, segue para o buffer de entrada, e então trasporta a carga para a máquina designada. Após isso, ele volta ao estado inativo, para esperar por uma nova solicitação, caso o robô continue em falha. Caso ao receber a solicitação, o robô em falha seja reiniciado com sucesso, o robô 3 volta ao estado inativo. Caso o robô 3 já esteja no processo de transporte e o robô em falha seja reiniciado, ele ficará inativo até que o robô 3 termine o processo.
-Note que há eventos que podem ser executados por cada robô simultaneamente, o que pode causar conflitos: O robô 1 e o robô 2 podem receber uma solicitação ao mesmo tempo, e então colidiriam no buffer de enrada. Dessa forma, faz-se necessário que enquanto um robô se dirija ao buffer de entrada, o outro se mantenha pronto a mover-se. Quando o primeiro robô retira a carga e for transportá-la para a máquina, então o outro robô pode se dirigir ao buffer de entrada. Para controlar isso, um autômato supervisório deve ser projetado. Esse autômato é ilustrado na figura 3.
+No momento em que qualquer um dos autômatos R1 e R2 entrarem em falha, R3 é ativado, segue para o buffer de entrada, e então trasporta a carga para a máquina designada. Após isso, ele volta ao estado inativo, para esperar por uma nova solicitação, caso o robô continue em falha. Após o robô 3 assumir o papel de um dos outros robôs, este fica impossibilitado de reinicializar, até que o robô três termine o percurso de transporte e volte ao estado *IDLE* 
+Note que há eventos que podem ser executados por cada robô simultaneamente, o que pode causar conflitos: O robô 1 e o robô 2 podem se digirir ao buffer ao mesmo tempo, e então colidiriam no buffer de enrada. Dessa forma, faz-se necessário que enquanto um robô se dirija ao buffer de entrada, o outro se mantenha pronto a mover-se. Quando o primeiro robô retira a carga e for transportá-la para a máquina, então o outro robô pode se dirigir ao buffer de entrada. Além disso, já que o robô 3 consegue receber a carga de qualquer outro robô, é necessário controlar para qual máquina o robô 3 deve levar a carga que recebeu do buffer, pois ele receberá a carga do robô que está em estado de falha. Para controlar isso, dois autômato supervisórios devem ser projetados. Esses autômatos são ilustrados nas figura 3 e 4.
 
-![Autômato Supervisor](imagens/Supervisor.png)
+![SupervisorMachine](Imagens/SupervisorMachine.png)
+
+![SupervisorBE](Imagens/SupervisorBE.png)
+
+Esses autômatos regulam a validade de eventos nos autômatos dos robôs, como invalidar o evento *move_to_BE_Rx*, caso o buffer esteja ocupado, ou os eventos *unload_R3_M1* e *unload_R3_M2*, caso o robô 3 esteja substituindo o robô 2.
 
 ## Resultados e Conclusões
-Após a adição do supervisor, a simular o sistema, caso um dos robôs se dirija ao buffer de entrada e o outro tenha recebido uma solicitação, este não poderá seguir para o buffer de entrada antes que o evento de trasportar a carga para a máquina ocorra no autômato do primeiro robô. Esse processo é ilustrado nas figuras 4 e 5, onde os eventos verdes são os eventos habilitados no estado atual. Note que quando ocorre o evento "EVENTO DE IR PRO BUFFER" ocorre em um autômato, e o outro está no estado de "ESTADO DE ESPERA PARA IR PARA O BUFFER", o evento "EVENTO DE IR PRO BUFFER" está desativado neste autômato, o que resolve o problema de colisão e competição por carga no buffer. Isso ocorre também para o robô 3.
+Após a adição dos supervisores, ao simular o sistema, caso um dos robôs se dirija ao buffer de entrada e o outro tenha recebido uma solicitação, este não poderá seguir para o buffer de entrada antes que o evento de trasportar a carga para a máquina ocorra no autômato do primeiro robô. Esse processo é ilustrado nas figuras 4 e 5, onde os eventos verdes são os eventos habilitados no estado atual. Note que quando ocorre o evento "EVENTO DE IR PRO BUFFER" ocorre em um autômato, e o outro está no estado de "ESTADO DE ESPERA PARA IR PARA O BUFFER", o evento "EVENTO DE IR PRO BUFFER" está desativado neste autômato, o que resolve o problema de colisão e competição por carga no buffer. Isso ocorre também para o robô 3.
 
-![fig5](imagens/Supervisor.png) ![fig6](imagens/Supervisor.png)
+A implementação do robô reserva também funcionou como esperado: O evento "EVENTO DE FALHA" em um dos robôs ativa o robô 3, que recebe a solicitação. caso o evento "REINICIALIZAÇÃO" ocorra, o robô 3 volta ao estado inativo, e o primeiro robô está pronto para receber a solicitação. Caso contrário, o robô 3 se dirige ao buffer, caso não haja outro robô se dirigindo até lá, e então pode transportar a carga. Caso o robô que tenha falhado seja reinicalizado durante esse processo, ele não é reativado, e não pode receber solicitações, até que robô 3 termine o percurso.
 
-A implementação do robô reserva também funcionou como esperado: O evento "EVENTO DE FALHA" em um dos robôs ativa o robô 3, que recebe a solicitação. caso o evento "REINICIALIZAÇÃO" ocorra, o robô 3 volta ao estado inativo, e o primeiro robô está pronto para receber a solicitação. Caso contrário, o robô 3 se dirige ao buffer, caso não haja outro robô se dirigindo até lá, e então pode transportar a carga. Caso o robô que tenha falhado seja reinicalizado durante esse processo, ele não é reativado, e não pode receber solicitações, até que robô 3 termine o percurso. Ese processo é ilustrado nas figuras 6 e 7
-
-![fig7](imagens/Supervisor.png) ![fig8](imagens/Supervisor.png)
+Uma observação é que não é possível ocorrer uma falha dupla, em que o robô 1 e o robô 2 estejam em estado de falha simultaneamente, e essa lógica deve ser implementada em ocasiões futuras.
 
 Foi-se capaz de mostrar a partir dessas simulações que o projeto de controle supervisório em um sistema a eventos discretos é eficiente em aplicar restrições e permissões a eventos controláveis em autômatos finitos, e o software foi um facilitador do processo de criar e simular os outômatos e o sistema composto pelos mesmos.
 
