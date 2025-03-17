@@ -42,7 +42,7 @@
 <NodeList>
 <SimpleNode Initial="true" Name="Idle">
 <PointGeometry>
-<Point X="-464" Y="96"/>
+<Point X="-464" Y="80"/>
 </PointGeometry>
 <LabelGeometry Anchor="NW">
 <Point X="0" Y="10"/>
@@ -58,7 +58,7 @@
 </SimpleNode>
 <SimpleNode Name="Load">
 <PointGeometry>
-<Point X="-144" Y="208"/>
+<Point X="-144" Y="272"/>
 </PointGeometry>
 <LabelGeometry Anchor="NW">
 <Point X="0" Y="10"/>
@@ -66,7 +66,7 @@
 </SimpleNode>
 <SimpleNode Name="UnloadFree">
 <PointGeometry>
-<Point X="-400" Y="400"/>
+<Point X="-464" Y="80"/>
 </PointGeometry>
 <LabelGeometry Anchor="NW">
 <Point X="0" Y="10"/>
@@ -90,14 +90,6 @@
 </LabelGeometry>
 </LabelBlock>
 </Edge>
-<Edge Source="UnloadFree" Target="Idle">
-<LabelBlock>
-<SimpleIdentifier Name="return_R1"/>
-<LabelGeometry Anchor="NW">
-<Point X="-35" Y="9"/>
-</LabelGeometry>
-</LabelBlock>
-</Edge>
 <Edge Source="ReadyToMoveToBE" Target="Failure">
 <LabelBlock>
 <SimpleIdentifier Name="failure_R1"/>
@@ -117,7 +109,7 @@
 </LabelGeometry>
 </LabelBlock>
 <SplineGeometry>
-<Point X="-252" Y="6"/>
+<Point X="-249" Y="-2"/>
 </SplineGeometry>
 </Edge>
 <Edge Source="Load" Target="Failure">
@@ -136,10 +128,10 @@
 </LabelGeometry>
 </LabelBlock>
 <StartPointGeometry>
-<Point X="-144" Y="208"/>
+<Point X="-144" Y="272"/>
 </StartPointGeometry>
 <SplineGeometry>
-<Point X="-297" Y="282"/>
+<Point X="-268" Y="183"/>
 </SplineGeometry>
 </Edge>
 <Edge Source="Load" Target="UnloadFree">
@@ -150,31 +142,11 @@
 </LabelGeometry>
 </LabelBlock>
 <StartPointGeometry>
-<Point X="-144" Y="208"/>
+<Point X="-144" Y="272"/>
 </StartPointGeometry>
 <SplineGeometry>
-<Point X="-255" Y="323"/>
+<Point X="-317" Y="203"/>
 </SplineGeometry>
-</Edge>
-<Edge Source="Failure" Target="Failure">
-<LabelBlock>
-<SimpleIdentifier Name="request_R1_for_R3"/>
-<LabelGeometry Anchor="NW">
-<Point X="-66" Y="-31"/>
-</LabelGeometry>
-</LabelBlock>
-</Edge>
-<Edge Source="Idle" Target="ReadyToMoveToBE">
-<LabelBlock>
-<SimpleIdentifier Name="request_M1_for_R1"/>
-<SimpleIdentifier Name="request_M2_for_R1"/>
-<LabelGeometry Anchor="NW">
-<Point X="-74" Y="5"/>
-</LabelGeometry>
-</LabelBlock>
-<StartPointGeometry>
-<Point X="-464" Y="96"/>
-</StartPointGeometry>
 </Edge>
 </EdgeList>
 </Graph>
@@ -343,17 +315,9 @@
 <Point X="0" Y="10"/>
 </LabelGeometry>
 </SimpleNode>
-<SimpleNode Name="WaitAvailability">
-<PointGeometry>
-<Point X="352" Y="96"/>
-</PointGeometry>
-<LabelGeometry Anchor="NW">
-<Point X="-35" Y="-22"/>
-</LabelGeometry>
-</SimpleNode>
 </NodeList>
 <EdgeList>
-<Edge Source="WaitAvailability" Target="receive_packet">
+<Edge Source="Idle" Target="receive_packet">
 <LabelBlock>
 <SimpleIdentifier Name="request_M3_for_R2"/>
 <LabelGeometry Anchor="NW">
@@ -361,7 +325,7 @@
 </LabelGeometry>
 </LabelBlock>
 <StartPointGeometry>
-<Point X="352" Y="96"/>
+<Point X="240" Y="160"/>
 </StartPointGeometry>
 </Edge>
 <Edge Source="receive_packet" Target="Idle">
@@ -375,14 +339,6 @@
 <SplineGeometry>
 <Point X="360" Y="190"/>
 </SplineGeometry>
-</Edge>
-<Edge Source="Idle" Target="WaitAvailability">
-<LabelBlock>
-<SimpleIdentifier Name="request3"/>
-<LabelGeometry Anchor="NW">
-<Point X="-32" Y="-26"/>
-</LabelGeometry>
-</LabelBlock>
 </Edge>
 </EdgeList>
 </Graph>
@@ -416,17 +372,6 @@
 </SimpleNode>
 </NodeList>
 <EdgeList>
-<Edge Source="WaitAvailability" Target="receive_packet">
-<LabelBlock>
-<SimpleIdentifier Name="request_M4_for_R2"/>
-<LabelGeometry Anchor="NW">
-<Point X="-37" Y="-26"/>
-</LabelGeometry>
-</LabelBlock>
-<StartPointGeometry>
-<Point X="256" Y="64"/>
-</StartPointGeometry>
-</Edge>
 <Edge Source="receive_packet" Target="Idle">
 <LabelBlock>
 <SimpleIdentifier Name="unloadR2_M4"/>
@@ -439,13 +384,16 @@
 <Point X="264" Y="174"/>
 </SplineGeometry>
 </Edge>
-<Edge Source="Idle" Target="WaitAvailability">
+<Edge Source="WaitAvailability" Target="receive_packet">
 <LabelBlock>
-<SimpleIdentifier Name="request4"/>
+<SimpleIdentifier Name="request_M4_for_R2"/>
 <LabelGeometry Anchor="NW">
-<Point X="-44" Y="-20"/>
+<Point X="-37" Y="-26"/>
 </LabelGeometry>
 </LabelBlock>
+<StartPointGeometry>
+<Point X="256" Y="64"/>
+</StartPointGeometry>
 </Edge>
 </EdgeList>
 </Graph>
