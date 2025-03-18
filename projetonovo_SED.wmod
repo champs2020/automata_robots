@@ -42,7 +42,7 @@
 <NodeList>
 <SimpleNode Initial="true" Name="Idle">
 <PointGeometry>
-<Point X="-464" Y="80"/>
+<Point X="-448" Y="96"/>
 </PointGeometry>
 <LabelGeometry Anchor="NW">
 <Point X="0" Y="10"/>
@@ -59,14 +59,6 @@
 <SimpleNode Name="Load">
 <PointGeometry>
 <Point X="-144" Y="272"/>
-</PointGeometry>
-<LabelGeometry Anchor="NW">
-<Point X="0" Y="10"/>
-</LabelGeometry>
-</SimpleNode>
-<SimpleNode Name="UnloadFree">
-<PointGeometry>
-<Point X="-464" Y="80"/>
 </PointGeometry>
 <LabelGeometry Anchor="NW">
 <Point X="0" Y="10"/>
@@ -109,7 +101,7 @@
 </LabelGeometry>
 </LabelBlock>
 <SplineGeometry>
-<Point X="-249" Y="-2"/>
+<Point X="-245" Y="9"/>
 </SplineGeometry>
 </Edge>
 <Edge Source="Load" Target="Failure">
@@ -120,33 +112,23 @@
 </LabelGeometry>
 </LabelBlock>
 </Edge>
-<Edge Source="Load" Target="UnloadFree">
-<LabelBlock>
-<SimpleIdentifier Name="unloadR1_M2"/>
-<LabelGeometry Anchor="NW">
-<Point X="-26" Y="8"/>
-</LabelGeometry>
-</LabelBlock>
-<StartPointGeometry>
-<Point X="-144" Y="272"/>
-</StartPointGeometry>
-<SplineGeometry>
-<Point X="-268" Y="183"/>
-</SplineGeometry>
-</Edge>
-<Edge Source="Load" Target="UnloadFree">
+<Edge Source="Load" Target="Idle">
 <LabelBlock>
 <SimpleIdentifier Name="unloadR1_M1"/>
+<SimpleIdentifier Name="unloadR1_M2"/>
 <LabelGeometry Anchor="NW">
-<Point X="-35" Y="7"/>
+<Point X="-30" Y="28"/>
 </LabelGeometry>
 </LabelBlock>
-<StartPointGeometry>
-<Point X="-144" Y="272"/>
-</StartPointGeometry>
-<SplineGeometry>
-<Point X="-317" Y="203"/>
-</SplineGeometry>
+</Edge>
+<Edge Source="Idle" Target="ReadyToMoveToBE">
+<LabelBlock>
+<SimpleIdentifier Name="request_M1_for_R1"/>
+<SimpleIdentifier Name="request_M2_for_R1"/>
+<LabelGeometry Anchor="NW">
+<Point X="-12" Y="-45"/>
+</LabelGeometry>
+</LabelBlock>
 </Edge>
 </EdgeList>
 </Graph>
@@ -294,6 +276,14 @@
 <Point X="0" Y="10"/>
 </LabelGeometry>
 </SimpleNode>
+<SimpleNode Name="WaitingRobot">
+<PointGeometry>
+<Point X="240" Y="288"/>
+</PointGeometry>
+<LabelGeometry Anchor="NW">
+<Point X="0" Y="10"/>
+</LabelGeometry>
+</SimpleNode>
 </NodeList>
 <EdgeList>
 <Edge Source="Idle" Target="receive_packet">
@@ -319,6 +309,26 @@
 <Point X="360" Y="190"/>
 </SplineGeometry>
 </Edge>
+<Edge Source="Idle" Target="WaitingRobot">
+<LabelBlock>
+<SimpleIdentifier Name="request_M4_for_R2"/>
+</LabelBlock>
+<SplineGeometry>
+<Point X="256" Y="224"/>
+</SplineGeometry>
+</Edge>
+<Edge Source="WaitingRobot" Target="Idle">
+<LabelBlock>
+<SimpleIdentifier Name="unloadR2_M4"/>
+<SimpleIdentifier Name="unloadR3_M4"/>
+<LabelGeometry Anchor="NW">
+<Point X="-79" Y="16"/>
+</LabelGeometry>
+</LabelBlock>
+<SplineGeometry>
+<Point X="224" Y="224"/>
+</SplineGeometry>
+</Edge>
 </EdgeList>
 </Graph>
 </SimpleComponent>
@@ -336,6 +346,14 @@
 <SimpleNode Name="receive_packet">
 <PointGeometry>
 <Point X="384" Y="144"/>
+</PointGeometry>
+<LabelGeometry Anchor="NW">
+<Point X="0" Y="10"/>
+</LabelGeometry>
+</SimpleNode>
+<SimpleNode Name="WaitingRobot">
+<PointGeometry>
+<Point X="144" Y="272"/>
 </PointGeometry>
 <LabelGeometry Anchor="NW">
 <Point X="0" Y="10"/>
@@ -366,6 +384,26 @@
 <Point X="144" Y="144"/>
 </StartPointGeometry>
 </Edge>
+<Edge Source="Idle" Target="WaitingRobot">
+<LabelBlock>
+<SimpleIdentifier Name="request_M3_for_R2"/>
+</LabelBlock>
+<SplineGeometry>
+<Point X="160" Y="208"/>
+</SplineGeometry>
+</Edge>
+<Edge Source="WaitingRobot" Target="Idle">
+<LabelBlock>
+<SimpleIdentifier Name="unloadR2_M3"/>
+<SimpleIdentifier Name="unloadR3_M3"/>
+<LabelGeometry Anchor="NW">
+<Point X="-76" Y="14"/>
+</LabelGeometry>
+</LabelBlock>
+<SplineGeometry>
+<Point X="128" Y="208"/>
+</SplineGeometry>
+</Edge>
 </EdgeList>
 </Graph>
 </SimpleComponent>
@@ -383,6 +421,14 @@
 <SimpleNode Name="receive_packet">
 <PointGeometry>
 <Point X="400" Y="112"/>
+</PointGeometry>
+<LabelGeometry Anchor="NW">
+<Point X="0" Y="10"/>
+</LabelGeometry>
+</SimpleNode>
+<SimpleNode Name="WaitingRobot">
+<PointGeometry>
+<Point X="176" Y="240"/>
 </PointGeometry>
 <LabelGeometry Anchor="NW">
 <Point X="0" Y="10"/>
@@ -412,6 +458,26 @@
 <StartPointGeometry>
 <Point X="176" Y="112"/>
 </StartPointGeometry>
+</Edge>
+<Edge Source="Idle" Target="WaitingRobot">
+<LabelBlock>
+<SimpleIdentifier Name="request_M2_for_R1"/>
+</LabelBlock>
+<SplineGeometry>
+<Point X="192" Y="176"/>
+</SplineGeometry>
+</Edge>
+<Edge Source="WaitingRobot" Target="Idle">
+<LabelBlock>
+<SimpleIdentifier Name="unloadR1_M2"/>
+<SimpleIdentifier Name="unloadR3_M2"/>
+<LabelGeometry Anchor="NW">
+<Point X="-82" Y="18"/>
+</LabelGeometry>
+</LabelBlock>
+<SplineGeometry>
+<Point X="160" Y="176"/>
+</SplineGeometry>
 </Edge>
 </EdgeList>
 </Graph>
@@ -443,7 +509,7 @@
 <Point X="-14" Y="11"/>
 </LabelGeometry>
 </SimpleNode>
-<SimpleNode Name="ReadyToReplace">
+<SimpleNode Name="ReplaceR1">
 <PointGeometry>
 <Point X="0" Y="-64"/>
 </PointGeometry>
@@ -469,9 +535,9 @@
 </SimpleNode>
 </NodeList>
 <EdgeList>
-<Edge Source="Idle" Target="ReadyToReplace">
+<Edge Source="Idle" Target="ReplaceR1">
 <LabelBlock>
-<SimpleIdentifier Name="request_R1_for_R3"/>
+<SimpleIdentifier Name="failure_R1"/>
 <LabelGeometry Anchor="NW">
 <Point X="-45" Y="-43"/>
 </LabelGeometry>
@@ -493,7 +559,7 @@
 </Edge>
 <Edge Source="Idle" Target="ReplaceR2">
 <LabelBlock>
-<SimpleIdentifier Name="request_R2_for_R3"/>
+<SimpleIdentifier Name="failure_R2"/>
 <LabelGeometry Anchor="NW">
 <Point X="-41" Y="-16"/>
 </LabelGeometry>
@@ -505,7 +571,7 @@
 <Point X="160" Y="-16"/>
 </EndPointGeometry>
 </Edge>
-<Edge Source="ReadyToReplace" Target="LoadBE1">
+<Edge Source="ReplaceR1" Target="LoadBE1">
 <LabelBlock>
 <SimpleIdentifier Name="move_to_BE_R3"/>
 <LabelGeometry Anchor="NW">
@@ -567,6 +633,14 @@
 <Point X="0" Y="10"/>
 </LabelGeometry>
 </SimpleNode>
+<SimpleNode Name="WaitingRobot">
+<PointGeometry>
+<Point X="96" Y="288"/>
+</PointGeometry>
+<LabelGeometry Anchor="NW">
+<Point X="0" Y="10"/>
+</LabelGeometry>
+</SimpleNode>
 </NodeList>
 <EdgeList>
 <Edge Source="receive_packet" Target="Idle">
@@ -591,6 +665,26 @@
 <StartPointGeometry>
 <Point X="96" Y="176"/>
 </StartPointGeometry>
+</Edge>
+<Edge Source="Idle" Target="WaitingRobot">
+<LabelBlock>
+<SimpleIdentifier Name="request_M1_for_R1"/>
+</LabelBlock>
+<SplineGeometry>
+<Point X="112" Y="232"/>
+</SplineGeometry>
+</Edge>
+<Edge Source="WaitingRobot" Target="Idle">
+<LabelBlock>
+<SimpleIdentifier Name="unloadR1_M1"/>
+<SimpleIdentifier Name="unloadR3_M1"/>
+<LabelGeometry Anchor="NW">
+<Point X="-79" Y="14"/>
+</LabelGeometry>
+</LabelBlock>
+<SplineGeometry>
+<Point X="80" Y="232"/>
+</SplineGeometry>
 </Edge>
 </EdgeList>
 </Graph>
