@@ -127,14 +127,6 @@
 <Point X="-464" Y="96"/>
 </EndPointGeometry>
 </Edge>
-<Edge Source="Failure" Target="Failure">
-<LabelBlock>
-<SimpleIdentifier Name="request_R1_for_R3"/>
-<LabelGeometry Anchor="NW">
-<Point X="-66" Y="-31"/>
-</LabelGeometry>
-</LabelBlock>
-</Edge>
 <Edge Source="Idle" Target="ReadyToMoveToBE">
 <LabelBlock>
 <SimpleIdentifier Name="request_M1_for_R1"/>
@@ -254,17 +246,6 @@
 <EndPointGeometry>
 <Point X="80" Y="336"/>
 </EndPointGeometry>
-</Edge>
-<Edge Source="Failure" Target="Failure">
-<LabelBlock>
-<SimpleIdentifier Name="request_R2_for_R3"/>
-<LabelGeometry Anchor="NW">
-<Point X="-66" Y="-27"/>
-</LabelGeometry>
-</LabelBlock>
-<SplineGeometry>
-<Point X="546" Y="285"/>
-</SplineGeometry>
 </Edge>
 </EdgeList>
 </Graph>
