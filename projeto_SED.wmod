@@ -139,6 +139,14 @@
 <Point X="-464" Y="96"/>
 </StartPointGeometry>
 </Edge>
+<Edge Source="Failure" Target="Failure">
+<LabelBlock>
+<SimpleIdentifier Name="request_R1_for_R3"/>
+<LabelGeometry Anchor="NW">
+<Point X="-53" Y="-25"/>
+</LabelGeometry>
+</LabelBlock>
+</Edge>
 </EdgeList>
 </Graph>
 </SimpleComponent>
@@ -246,6 +254,14 @@
 <EndPointGeometry>
 <Point X="80" Y="336"/>
 </EndPointGeometry>
+</Edge>
+<Edge Source="Failure" Target="Failure">
+<LabelBlock>
+<SimpleIdentifier Name="request_R2_for_R3"/>
+<LabelGeometry Anchor="NW">
+<Point X="-59" Y="-26"/>
+</LabelGeometry>
+</LabelBlock>
 </Edge>
 </EdgeList>
 </Graph>
