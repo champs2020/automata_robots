@@ -67,32 +67,35 @@ Os estados do autômato R3 são:
 - LoadBE2;
 
 Os eventos controláveis possíveis do autômato R3 são:
+- request_Rx_R3;
 - move_to_BE_R3;
 - unload_R3_Mx;
 
-Os eventos não controláveis de R3 são:
-- request_Rx_R3;
-- robot_reset_Rx;
-
-Após um dos robôs 1 e 2 receberem um request, o R3 se torna apto a tomar suas posições caso ocorra uma falha. Quando isso ocorre, segue para o buffer de entrada, e então trasporta a respectiva carga para a máquina designada. Após isso, ele volta ao estado inativo, para esperar por uma nova solicitação, caso o robô continue em falha. Isso também ocorre para caso ambos os robôs estejam em falha siimultaneamente. Ele é capaz de cumprir a tarefa de um robô e logo após voltar ao estado inativo, receber uma requisição do outro robô que estava em falha, e assim, transportar a carga requisitada a ele.
-Trataremos agora dos autômatos das máquinas do sistema, que vão controlar os requests para cada robô. Todas as máquinas possuem a mesma estrutura, mudando apenas o nome dos eventos associados a cada estado. Os autômatos M1 e M2 sao ilustrados nas figuras 3 e 4. Essa estrutura se repete de forma análoga para as máquinas 3 e 4:
+Após um dos robôs 1 e 2 receberem um request, o R3 se torna apto a tomar suas posições caso ocorra uma falha. Quando isso ocorre, o robô em falha faz o request para o robô três substituí-lo, assim, ele segue para o buffer de entrada, e então trasporta a respectiva carga para a máquina designada. Após isso, ele volta ao estado inativo, para esperar por uma nova solicitação, caso o robô continue em falha. Isso também ocorre para caso ambos os robôs estejam em falha siimultaneamente. Ele é capaz de cumprir a tarefa de um robô e logo após voltar ao estado inativo, receber uma requisição do outro robô que estava em falha, e assim, transportar a carga requisitada a ele.
+Trataremos agora dos autômatos das máquinas do sistema, que vão controlar os requests para os robôs 1 e 2. Todas as máquinas possuem a mesma estrutura, mudando apenas o nome dos eventos associados a cada estado. Os autômatos M1 e M2 sao ilustrados nas figuras 3 e 4. Essa estrutura se repete de forma análoga para as máquinas 3 e 4:
 
 ![Autômato M1](Imagens/M1.png) ![Autômato M2](Imagens/M2.png)
 
 Os estados dos autômatos das máquinas são:
 - Idle;
-- WaitingRobot;
+- WaitAvailability;
 - RecievePackage;
 
 Os eventos das máquinas 1 e 2 são:
-- request_Mx_for_R1;
-- unload_R1_Mx;
+- Controláveis:
+  - request_Mx_for_R1;
+  - unload_R1_Mx;
+- Não Controláveis:
+  - Requestx;
 
 Já para as máquinas 3 e 4, são:
-- request_Mx_for_R2;
-- unload_R2_Mx;
+- Controláveis:
+  - request_Mx_for_R2;
+  - unload_R2_Mx;
+- Não Controláveis:
+  - Requestx;
 
-Ambas as máquinas iniciam no estado Idle. Quando uma das máquinas 1 e 2 fazem uma requisição para o robô 1, aquela que fez a requisição segue para o estado de RecievePackage, enquanto a outra muda para o estado WaitingRobot. Isso se deve porque a máquina deve esperar o robô terminar o percurso de transporte e voltar ao estado inativo, antes de enviar uma requisição para ele. As máquinas voltam ao estado inativo após a ocorrência do evento de descarga do robô. Caso um dos robos venham a falhar, as máquinas se mantém em seu estado atual, até que o robô três transporte a carga até a máquina requisitada.
+Ambas as máquinas iniciam no estado Idle. Quando uma das máquinas 1 e 2 fazem uma requisição para o robô 1, ela segue para o estado de espera, onde caso o robô esteja inativo, ela pode enviar esse request para o robô. Isso se deve porque a máquina deve esperar o robô terminar o percurso de transporte e voltar ao estado inativo, antes de enviar uma requisição para ele. As máquinas voltam ao estado inativo após a ocorrência do evento de descarga do robô. Caso um dos robos venham a falhar, as máquinas se mantém em seu estado atual, até que o robô três transporte a carga até a máquina requisitada.
 
 ## Resultados e Conclusões
 O sistema obteve o comportamento esperado. Ao simular o sistema, os robôs recebem as requisições de uma das máquinas, e após a retirada da carga, o evento de descarga que é habilitado é o que leva a carga à máquina que fez o request, enquantoq que o evento de descarga para a ma´quina que não fez a solicitação é inativado.
