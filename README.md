@@ -43,13 +43,13 @@ Os estados definidos para os autômatos R1 e R2 são:
 - Failure
 
 Os eventos controláveis possíveis para cada autômato são:
+- request_Mx_Rx;
 - move_to_BE_Rx;
 - Unload_Rx_Mx;
 - Unload_Rx_My;
 
 Os eventos não controláveis são:
-- request_Mx_Rx;
-- Failure_Rx;
+- failure_Rx;
 - robot_reset_Rx;
 
 Ambos os robôs estão por padrão inativos. Neste estado, ualquer um pode ser acionado a qualquer momento, o que o leva para o estado de request(*ReadytoMovetoBE*), e caso haja uma falha, o autômato fica em um estado de falha, caso não, o robô segue até o buffer de entrada para retirar a carga. A partir daí, o autômato pode falhar, ou descarregar. O evento de descarga leva o autômato dos robôs de volta ao estado inativo. No estado de falha, o evento de reset também leva os robôs de volta ao estado inativo.
@@ -71,10 +71,10 @@ Os eventos controláveis possíveis do autômato R3 são:
 - unload_R3_Mx;
 
 Os eventos não controláveis de R3 são:
-- failure_Rx;
+- request_Rx_R3;
 - robot_reset_Rx;
 
-No momento em que qualquer um dos autômatos R1 e R2 entrarem em falha, R3 é ativado, segue para o buffer de entrada, e então trasporta a respectiva carga para a máquina designada. Após isso, ele volta ao estado inativo, para esperar por uma nova solicitação, caso o robô continue em falha.  
+Após um dos robôs 1 e 2 receberem um request, o R3 se torna apto a tomar suas posições caso ocorra uma falha. Quando isso ocorre, segue para o buffer de entrada, e então trasporta a respectiva carga para a máquina designada. Após isso, ele volta ao estado inativo, para esperar por uma nova solicitação, caso o robô continue em falha. Isso também ocorre para caso ambos os robôs estejam em falha siimultaneamente. Ele é capaz de cumprir a tarefa de um robô e logo após voltar ao estado inativo, receber uma requisição do outro robô que estava em falha, e assim, transportar a carga requisitada a ele.
 Trataremos agora dos autômatos das máquinas do sistema, que vão controlar os requests para cada robô. Todas as máquinas possuem a mesma estrutura, mudando apenas o nome dos eventos associados a cada estado. Os autômatos M1 e M2 sao ilustrados nas figuras 3 e 4. Essa estrutura se repete de forma análoga para as máquinas 3 e 4:
 
 ![Autômato M1](Imagens/M1.png) ![Autômato M2](Imagens/M2.png)
